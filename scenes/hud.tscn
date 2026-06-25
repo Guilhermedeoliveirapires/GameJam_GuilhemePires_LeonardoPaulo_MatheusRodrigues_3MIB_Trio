@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8hudscene001"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://assets/coracao_cheio.png" id="2_heart"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_health"]
+font_size = 24
+font_color = Color(1, 1, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HealthLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 48.0
+text = "Vidas: 3"
+label_settings = SubResource("LabelSettings_health")
+
+[node name="ScoreLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 120.0
+offset_right = 200.0
+offset_bottom = 148.0
+text = "Peixes: 0"
+label_settings = SubResource("LabelSettings_health")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 52.0
+offset_right = 136.0
+offset_bottom = 84.0
+theme_override_constants/separation = 4
+
+[node name="Coracao1" type="TextureRect" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coracao2" type="TextureRect" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coracao3" type="TextureRect" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 92.0
+offset_right = 216.0
+offset_bottom = 116.0
+max_value = 3.0
+value = 3.0
+show_percentage = false
+
+[node name="TimerLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 48.0
+grow_horizontal = 0
+text = "01:00"
+horizontal_alignment = 2
+label_settings = SubResource("LabelSettings_health")

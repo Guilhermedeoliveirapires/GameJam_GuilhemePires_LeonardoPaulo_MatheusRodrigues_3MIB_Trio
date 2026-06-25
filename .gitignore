@@ -1,0 +1,16 @@
+# Godot 4+
+.godot/
+*.translation
+
+# Exportação (pode ser gerada de novo no Godot)
+export/web/
+export/*.zip
+
+# Backups e cenas antigas
+scenes/level_1_backup.tscn
+node_2d.tscn
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.tmp

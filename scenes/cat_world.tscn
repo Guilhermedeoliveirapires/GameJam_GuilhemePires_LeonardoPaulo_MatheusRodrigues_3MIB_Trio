@@ -1,0 +1,249 @@
+[gd_scene load_steps=12 format=3 uid="uid://catworld0001"]
+
+[ext_resource type="Script" path="res://scripts/cat_world.gd" id="1_world"]
+[ext_resource type="Texture2D" path="res://kenney_platformer-art-deluxe/Mushroom expansion/Backgrounds/bg_grasslands.png" id="2_bg"]
+[ext_resource type="PackedScene" uid="uid://lumiepilogue1" path="res://scenes/lumi_epilogue.tscn" id="3_lumi"]
+[ext_resource type="PackedScene" uid="uid://catnpc00001" path="res://scenes/cat_npc.tscn" id="4_npc"]
+[ext_resource type="Texture2D" path="res://kenney_platformer-art-deluxe/Base pack/Tiles/door_openMid.png" id="5_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_final"]
+size = Vector2(120, 100)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogo"]
+bg_color = Color(0.12, 0.08, 0.2, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.85, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.95, 0.55, 0.15, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_confete"]
+direction = Vector3(0, -1, 0)
+spread = 80.0
+initial_velocity_min = 120.0
+initial_velocity_max = 280.0
+gravity = Vector3(0, 200, 0)
+scale_min = 2.0
+scale_max = 5.0
+color = Color(1, 0.8, 0.2, 1)
+
+[node name="CatWorld" type="Node2D"]
+script = ExtResource("1_world")
+
+[node name="Ambiente" type="Node2D" parent="."]
+
+[node name="Background" type="TextureRect" parent="Ambiente"]
+offset_right = 1800.0
+offset_bottom = 720.0
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Ambiente"]
+color = Color(1, 1, 1, 1)
+
+[node name="FlashBranco" type="ColorRect" parent="Ambiente"]
+offset_right = 1800.0
+offset_bottom = 720.0
+mouse_filter = 2
+color = Color(1, 1, 1, 1)
+
+[node name="PortaAtras" type="Sprite2D" parent="Ambiente"]
+position = Vector2(60, 430)
+modulate = Color(0.7, 0.7, 0.8, 0.6)
+texture = ExtResource("5_door")
+
+[node name="Confetes" type="GPUParticles2D" parent="Ambiente"]
+position = Vector2(900, 200)
+emitting = false
+amount = 40
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_confete")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="Mimi" parent="NPCs" instance=ExtResource("4_npc")]
+position = Vector2(420, 430)
+gato_nome = "Mimi"
+fala = "Bem-vindo, Lumi! Os cães não passam desta porta. Você está seguro agora!"
+
+[node name="AnimatedSprite2D" parent="NPCs/Mimi"]
+modulate = Color(0.85, 0.9, 1.2, 1)
+
+[node name="Tiko" parent="NPCs" instance=ExtResource("4_npc")]
+position = Vector2(820, 430)
+gato_nome = "Tiko"
+fala = "Você trouxe {peixes} peixes da jornada? O banquete do reino agradece!"
+
+[node name="AnimatedSprite2D" parent="NPCs/Tiko"]
+modulate = Color(1.2, 1.1, 0.75, 1)
+
+[node name="Zara" parent="NPCs" instance=ExtResource("4_npc")]
+position = Vector2(1380, 370)
+gato_nome = "Zara"
+fala = "Aqui só existem gatos felizes, sol e soneca. Fique à vontade, pequeno Lumi!"
+
+[node name="AnimatedSprite2D" parent="NPCs/Zara"]
+modulate = Color(1.15, 0.85, 1.1, 1)
+
+[node name="GatoSecreto" parent="NPCs" instance=ExtResource("4_npc")]
+visible = false
+position = Vector2(1050, 430)
+gato_nome = "Ancião Bigodes"
+fala = "Incrível! Você coletou TODOS os peixes! Poucos gatos conseguem isso. Você é lenda!"
+
+[node name="AnimatedSprite2D" parent="NPCs/GatoSecreto"]
+modulate = Color(1.3, 0.95, 0.5, 1)
+scale = Vector2(0.16, 0.16)
+
+[node name="ZonaFinal" type="Area2D" parent="."]
+position = Vector2(1680, 430)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZonaFinal"]
+shape = SubResource("RectangleShape2D_final")
+
+[node name="PlacaBemVindo" type="Label" parent="."]
+offset_left = 1580.0
+offset_top = 300.0
+offset_right = 1780.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0.15, 0.05, 0.25, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 18
+text = "REINO DOS GATOS"
+horizontal_alignment = 1
+
+[node name="Player" parent="." instance=ExtResource("3_lumi")]
+position = Vector2(120, 420)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DialogoPanel" type="PanelContainer" parent="UI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -150.0
+offset_right = 320.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialogo")
+
+[node name="VBox" type="VBoxContainer" parent="UI/DialogoPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NomeGato" type="Label" parent="UI/DialogoPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 18
+text = "Gato"
+
+[node name="DialogoLabel" type="Label" parent="UI/DialogoPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "..."
+autowrap_mode = 3
+
+[node name="FecharDialogo" type="Button" parent="UI/DialogoPanel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continuar"
+
+[node name="TelaFinal" type="ColorRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.02, 0.12, 0.75)
+
+[node name="Center" type="CenterContainer" parent="UI/TelaFinal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UI/TelaFinal/Center"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TituloFinal" type="Label" parent="UI/TelaFinal/Center/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0, 0.2, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 44
+text = "Você venceu!"
+horizontal_alignment = 1
+
+[node name="MensagemFinal" type="Label" parent="UI/TelaFinal/Center/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "..."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="MenuPrincipal" type="Button" parent="UI/TelaFinal/Center/VBox"]
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+text = "Menu Principal"
+
+[node name="DicaLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.1, 0.2, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 14
+text = "Explore o reino e fale com os gatos!"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="ZonaFinal" to="." method="_on_zona_final_body_entered"]
+[connection signal="pressed" from="UI/DialogoPanel/VBox/FecharDialogo" to="." method="_on_fechar_dialogo_pressed"]
+[connection signal="pressed" from="UI/TelaFinal/Center/VBox/MenuPrincipal" to="." method="_on_menu_principal_pressed"]
